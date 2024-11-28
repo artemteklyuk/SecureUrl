@@ -13,6 +13,7 @@ export const dataSourceOptions = (
   password: config.get('DB_PASSWORD') || 'root',
   database: config.get('DB_NAME') || 'urlSecure',
   synchronize: true,
+  dropSchema: true,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
 });
 

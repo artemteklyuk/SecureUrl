@@ -1,17 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { CheckResult } from './check-result.entity';
 
-@Entity('remote_api_entity')
+@Entity('checked-url')
 export class CheckedUrl extends BaseEntity {
   @Column({ name: 'base_url', type: 'varchar' })
-  apiKey: string;
+  baseUrl: string;
 
-  @Column({ name: 'verdict', type: 'varchar' })
-  serviceName: string;
+  @Column({ name: 'full_url', type: 'varchar' })
+  fullUrl: boolean;
 
-  @Column({ name: 'url', type: 'varchar' })
-  isWorkingApi: boolean;
-
-  @Column({ name: 'check_resource', type: 'varchar' })
-  checkResource: string;
+  @OneToMany(() => CheckResult, (checkResult) => checkResult.checkedUrl)
+  @JoinColumn({ name: 'id', referencedColumnName: 'checked_url_id' })
+  checkResult: CheckResult[];
 }
