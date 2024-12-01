@@ -1,4 +1,14 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CheckUrlService } from './check-url.service';
 
-@Controller('check-url')
-export class CheckUrlController {}
+@Controller('scanner')
+export class CheckUrlController {
+  constructor(private readonly checkUrlService: CheckUrlService) {}
+
+  @Post('scan-url')
+  private async scanUrl(@Body() body: { url: string }) {
+    const result = this.checkUrlService.scanUrl(body.url);
+    console.log(result);
+    return result;
+  }
+}

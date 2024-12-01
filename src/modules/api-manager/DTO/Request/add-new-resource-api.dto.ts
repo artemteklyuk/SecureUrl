@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class AddNewResourceApiDto {
     @ApiProperty({ description: 'API ключ ресурса', example: '2435432-fdsf-sgdsg-cvx-sgs-cxvLPF<FPW<P$' })
@@ -9,11 +8,11 @@ export class AddNewResourceApiDto {
 
     @ApiProperty({ description: 'Название ресурса', example: 'Virus Total' })
     @IsString()
-    public resourceName: string;
+    public serviceName: string;
 
     @ApiProperty({ description: 'Endpoint для запроса на проверку', example: 'https://virustotal/check-url' })
     @IsString()
-    public checkApiEndpoint: string;
+    public requestUrl: string;
 
     @ApiProperty({ description: 'Метод запроса', example: 'Get' })
     @IsString()

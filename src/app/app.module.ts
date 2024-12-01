@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { options } from 'src/core/database';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
