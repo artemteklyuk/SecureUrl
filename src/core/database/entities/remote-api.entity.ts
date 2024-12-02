@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { CheckResult } from './check-result.entity';
+import { SCAN_RESOURCES_NAMES } from 'src/core/consts';
 
 @Entity('remote_api')
 export class RemoteApi extends BaseEntity {
@@ -8,7 +9,7 @@ export class RemoteApi extends BaseEntity {
   apiKey: string;
 
   @Column({ name: 'service_name', type: 'varchar' })
-  serviceName: string;
+  serviceName: SCAN_RESOURCES_NAMES;
 
   @Column({ name: 'request_url', type: 'varchar' })
   requestUrl: string;
@@ -16,17 +17,17 @@ export class RemoteApi extends BaseEntity {
   @Column({ name: 'check_api_Method', type: 'varchar' })
   checkApiMethod: string;
 
-  @Column({ name: 'day_request_limit', type: 'number', nullable: true })
+  @Column({ name: 'day_request_limit', type: 'integer', nullable: true })
   dayRequestLimit?: number;
 
-  @Column({ name: 'minute_request_limit', type: 'number', nullable: true })
+  @Column({ name: 'minute_request_limit', type: 'integer', nullable: true })
   minuteRequestLimit?: number;
 
   @Column({ name: 'is_working_api', type: 'boolean' })
   isWorkingApi: boolean;
 
-  @Column({ name: 'expiration_date', type: 'date' })
-  expirationDate: Date;
+  @Column({ name: 'expiration_date', type: 'date', nullable: true })
+  expirationDate?: Date;
 
   @OneToMany(() => CheckResult, (checkResult) => checkResult.remoteApi)
   @JoinColumn({ name: 'id', referencedColumnName: 'remote_api_id' })

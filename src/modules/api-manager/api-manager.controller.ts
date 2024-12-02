@@ -7,7 +7,8 @@ export class ApiManagerController {
   constructor(private readonly apiManagerService: ApiManagerService) {}
 
   @Post('add-new-resource-api')
-  private async addNewResourceApi(@Body() body: AddNewResourceApiDto) {
+  public async addNewResourceApi(@Body() body: AddNewResourceApiDto) {
+    console.log(body);
     return await this.apiManagerService.addNewApi(body);
   }
 

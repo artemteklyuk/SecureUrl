@@ -5,10 +5,14 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { options } from 'src/core/database';
-import { HttpModule } from '@nestjs/axios';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { ApiManagerModule } from 'src/modules/api-manager/api-manager.module';
+import { CheckUrlModule } from 'src/modules/check-url/check-url.module';
 
 @Module({
   imports: [
+    ApiManagerModule,
+    CheckUrlModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env`,

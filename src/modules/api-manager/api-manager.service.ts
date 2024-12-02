@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RemoteApi } from 'src/core/database/entities';
-import { DeleteResult, LessThan, Repository } from 'typeorm';
+import { DeleteResult, IsNull, LessThan, Not, Repository } from 'typeorm';
 import { AddNewResourceApiDto } from './DTO/Request';
 import { ApiScanner } from 'src/core/types/apiScanner.type';
 
@@ -22,6 +22,7 @@ export class ApiManagerService {
     requestUrl,
     checkApiMethod,
     dayRequestLimit,
+    minuteRequestLimit,
   }: AddNewResourceApiDto): Promise<RemoteApi> {
     const apiService = await this.remoteApiRepository.existsBy({
       apiKey,
@@ -37,6 +38,8 @@ export class ApiManagerService {
       requestUrl,
       checkApiMethod,
       dayRequestLimit,
+      minuteRequestLimit,
+      isWorkingApi: true,
     });
 
     await this.remoteApiRepository.insert(newApiService);
@@ -59,19 +62,19 @@ export class ApiManagerService {
   }
 
   public async getScannerApi(_options?): Promise<ApiScanner> {
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0)
     const apiScannerInfo = await this.remoteApiRepository.findOne({
       where: {
-        expirationDate: LessThan(new Date(currentDate)),
-        minuteRequestLimit: LessThan(4),
-        dayRequestLimit: LessThan(500)
+        expirationDate: IsNull(),
       },
     });
+    if (!apiScannerInfo){
+      throw new NotFoundException()
+    }
     return {
-      apiKey: apiScannerInfo?.apiKey,
-      checkApiMethod: apiScannerInfo?.checkApiMethod,
-      requestUrl: apiScannerInfo?.requestUrl,
+      apiKey: apiScannerInfo.apiKey,
+      checkApiMethod: apiScannerInfo.checkApiMethod,
+      requestUrl: apiScannerInfo.requestUrl,
+      serviceName: apiScannerInfo.serviceName
     };
   }
 }

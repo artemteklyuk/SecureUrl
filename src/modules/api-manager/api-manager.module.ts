@@ -8,5 +8,6 @@ import { RemoteApi } from 'src/core/database/entities';
   imports: [TypeOrmModule.forFeature([RemoteApi])],
   providers: [ApiManagerService],
   controllers: [ApiManagerController],
+  exports: [ApiManagerService],
 })
 export class ApiManagerModule {}
