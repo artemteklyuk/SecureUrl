@@ -11,12 +11,8 @@ export class CheckUrlService {
     private readonly httpService: HttpService
   ) {}
 
-  private scanUrlStrategies() {
-    return RECOURSE_REQUEST_STRATEGIES;
-  }
-
   public scanUrlInstance(resourceName: string): IRequestStrategy {
-    const ScanUrlClass = this.scanUrlStrategies()[resourceName];
+    const ScanUrlClass = RECOURSE_REQUEST_STRATEGIES[resourceName];
 
     if (!ScanUrlClass) {
       throw new Error(`Not found strategy for site: ${resourceName}`);
