@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RemoteApi } from 'src/core/database/entities';
 import { DeleteResult, IsNull, LessThan, Not, Repository } from 'typeorm';
@@ -13,14 +9,16 @@ import { ApiScanner } from 'src/core/types/apiScanner.type';
 export class ApiManagerService {
   constructor(
     @InjectRepository(RemoteApi)
-    private readonly remoteApiRepository: Repository<RemoteApi>,
+    private readonly remoteApiRepository: Repository<RemoteApi>
   ) {}
 
   public async addNewApi({
     apiKey,
     serviceName,
     requestUrl,
-    checkApiMethod,
+    requestUrlMethod,
+    resultUrl,
+    resultUrlMethod,
     dayRequestLimit,
     minuteRequestLimit,
   }: AddNewResourceApiDto): Promise<RemoteApi> {
@@ -36,7 +34,9 @@ export class ApiManagerService {
       apiKey,
       serviceName,
       requestUrl,
-      checkApiMethod,
+      requestUrlMethod,
+      resultUrl,
+      resultUrlMethod,
       dayRequestLimit,
       minuteRequestLimit,
       isWorkingApi: true,
@@ -67,14 +67,16 @@ export class ApiManagerService {
         expirationDate: IsNull(),
       },
     });
-    if (!apiScannerInfo){
-      throw new NotFoundException()
+    if (!apiScannerInfo) {
+      throw new NotFoundException();
     }
     return {
       apiKey: apiScannerInfo.apiKey,
-      checkApiMethod: apiScannerInfo.checkApiMethod,
+      resultUrl: apiScannerInfo.resultUrl,
+      resultUrlMethod: apiScannerInfo.resultUrlMethod,
+      requestUrlMethod: apiScannerInfo.requestUrlMethod,
       requestUrl: apiScannerInfo.requestUrl,
-      serviceName: apiScannerInfo.serviceName
+      serviceName: apiScannerInfo.serviceName,
     };
   }
 }

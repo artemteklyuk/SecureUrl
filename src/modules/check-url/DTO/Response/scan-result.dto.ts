@@ -1,11 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
+export type UrlsStatus = 'clear' | 'warning' | 'danger';
+export enum urlStatus {
+  CLEAR = 'clear',
+  WARNING = 'warning',
+  DANGER = 'danger',
+}
+
 export class ScanResult {
   @ApiProperty({
-    description: 'ответ заглушка',
-    example: '2435432-fdsf-sgdsg-cvx-sgs-cxvLPF<FPW<P$',
+    description: 'статус проверки сайта',
+    enum: urlStatus,
   })
   @IsString()
-  public message: string;
+  public status: UrlsStatus;
 }

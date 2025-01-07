@@ -22,7 +22,6 @@ export class CheckUrlService {
   }
   public async scanUrl(url: string) {
     const checkUrlApi = await this.apiManagerService.getScannerApi();
-
     switch (checkUrlApi.serviceName) {
       case SCAN_RESOURCES_NAMES.VIRUSTOTAL: {
         const scanUrlInstance = this.scanUrlInstance(SCAN_RESOURCES_NAMES.VIRUSTOTAL);

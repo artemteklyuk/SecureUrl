@@ -7,7 +7,7 @@ export class CheckUrlController {
   constructor(private readonly checkUrlService: CheckUrlService) {}
 
   @Post('scan-url')
-  private async scanUrl(@Body() body: { url: string}) {
+  private async scanUrl(@Body() body: { url: string }) {
     const result = await this.checkUrlService.scanUrl(body.url);
     return result;
   }

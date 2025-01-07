@@ -3,9 +3,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 const configService = new ConfigService();
 
-export const dataSourceOptions = (
-  config: ConfigService,
-): DataSourceOptions => ({
+export const dataSourceOptions = (config: ConfigService): DataSourceOptions => ({
   type: 'postgres',
   host: config.get('DB_HOST') || 'localhost',
   port: 5432,
