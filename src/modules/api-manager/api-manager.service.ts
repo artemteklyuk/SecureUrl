@@ -1,9 +1,10 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RemoteApi } from 'src/core/database/entities';
-import { DeleteResult, IsNull, LessThan, Not, Repository } from 'typeorm';
+import { DeleteResult, Equal, IsNull, LessThan, Not, Repository } from 'typeorm';
 import { AddNewResourceApiDto } from './DTO/Request';
 import { ApiScanner } from 'src/core/types/apiScanner.type';
+import { SCAN_RESOURCES_NAMES } from 'src/core/consts';
 
 @Injectable()
 export class ApiManagerService {
@@ -65,6 +66,7 @@ export class ApiManagerService {
     const apiScannerInfo = await this.remoteApiRepository.findOne({
       where: {
         expirationDate: IsNull(),
+        serviceName: SCAN_RESOURCES_NAMES.URL_SCAN_IO,
       },
     });
     if (!apiScannerInfo) {

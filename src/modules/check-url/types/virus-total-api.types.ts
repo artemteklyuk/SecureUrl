@@ -22,3 +22,34 @@ export type VirusTotalResultData = {
     };
   };
 };
+
+export type UrlScanIoData = {
+  message: string;
+  uuid: string;
+  result: string;
+  api: string;
+  visibility: string;
+  options: object;
+  url: string;
+};
+
+export type UrlScanIoResultData = {
+  verdicts: {
+    overall: {
+      score: number;
+      categories: Array<any>;
+    };
+    urlscan: {
+      score: number;
+      categories: Array<any>;
+    };
+    engines: {
+      score: number;
+      categories: Array<any>;
+    };
+    community: {
+      score: number;
+      categories: Array<any>;
+    };
+  };
+};
