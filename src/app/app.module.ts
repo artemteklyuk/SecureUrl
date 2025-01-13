@@ -15,8 +15,8 @@ import { CheckUrlModule } from 'src/modules/check-url/check-url.module';
     CheckUrlModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env`,
       validationSchema: Joi.object({
+        NODE_ENV: Joi.string().valid('development', 'production').required(),
         PORT: Joi.number().required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.string().required(),

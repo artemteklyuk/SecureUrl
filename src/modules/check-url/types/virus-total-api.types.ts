@@ -1,3 +1,5 @@
+import { number } from 'joi';
+
 export type VirusTotalData = {
   data: {
     type: string;
@@ -34,6 +36,9 @@ export type UrlScanIoData = {
 };
 
 export type UrlScanIoResultData = {
+  stats: {
+    securePercentage: number;
+  };
   verdicts: {
     overall: {
       score: number;

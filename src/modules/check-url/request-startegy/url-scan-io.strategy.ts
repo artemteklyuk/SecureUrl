@@ -21,7 +21,7 @@ export class UrlScanIoStrategy implements IRequestStrategy {
       );
 
       let waitResults = true;
-      let result;
+      let secureScore;
       while (waitResults) {
         try {
           await wait(5000);
@@ -33,15 +33,19 @@ export class UrlScanIoStrategy implements IRequestStrategy {
               },
             }
           );
-          result = data;
+          secureScore = data.stats.securePercentage;
           if (data) {
             waitResults = false;
           }
-          console.log(data.verdicts);
         } catch (error) {}
       }
-
-      return { status: urlStatus.CLEAR };
+      if (secureScore > 80) {
+        return { status: urlStatus.CLEAR };
+      }
+      if (secureScore <= 80 && secureScore > 60) {
+        return { status: urlStatus.WARNING };
+      }
+      return { status: urlStatus.DANGER };
     } catch (error) {
       console.log(error);
       return { status: urlStatus.WARNING };

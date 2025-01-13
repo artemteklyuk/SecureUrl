@@ -3,6 +3,7 @@ import { ApiManagerService } from '../api-manager/api-manager.service';
 import { HttpService } from '@nestjs/axios';
 import { RECOURSE_REQUEST_STRATEGIES, SCAN_RESOURCES_NAMES } from 'src/core/consts';
 import { IRequestStrategy } from './types/request.strategy.interface';
+import { ScanOptions } from './types/scan-options.type';
 
 @Injectable()
 export class CheckUrlService {
@@ -20,8 +21,8 @@ export class CheckUrlService {
 
     return new ScanUrlClass();
   }
-  public async scanUrl(url: string) {
-    const checkUrlApi = await this.apiManagerService.getScannerApi();
+  public async scanUrl(url: string, scanOptions: ScanOptions) {
+    const checkUrlApi = await this.apiManagerService.getScannerApi(scanOptions);
     switch (checkUrlApi.serviceName) {
       case SCAN_RESOURCES_NAMES.VIRUSTOTAL: {
         const scanUrlInstance = this.scanUrlInstance(SCAN_RESOURCES_NAMES.VIRUSTOTAL);
