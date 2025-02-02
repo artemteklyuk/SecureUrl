@@ -37,8 +37,9 @@ export class VirusTotalStrategy implements IRequestStrategy {
         if (result.data.attributes.status !== 'queued') {
           waitResults = false;
         }
+        console.log(waitResults);
       }
-
+      console.log(result.data.attributes);
       const { stats: resultData } = result.data.attributes;
       if (resultData.malicious > 0) {
         return { status: urlStatus.DANGER };
@@ -48,6 +49,7 @@ export class VirusTotalStrategy implements IRequestStrategy {
       }
       return { status: urlStatus.CLEAR };
     } catch (error) {
+      console.log(error);
       return { status: urlStatus.WARNING };
     }
   }

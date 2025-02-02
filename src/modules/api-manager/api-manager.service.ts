@@ -67,7 +67,7 @@ export class ApiManagerService {
     const apiScannerInfo = await this.remoteApiRepository.findOne({
       where: {
         expirationDate: IsNull(),
-        serviceName: SCAN_RESOURCES_NAMES.URL_SCAN_IO,
+        serviceName: SCAN_RESOURCES_NAMES.VIRUSTOTAL,
       },
     });
     if (!apiScannerInfo) {

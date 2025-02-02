@@ -37,8 +37,10 @@ export class UrlScanIoStrategy implements IRequestStrategy {
           if (data) {
             waitResults = false;
           }
+          console.log(waitResults);
         } catch (error) {}
       }
+      console.log(secureScore);
       if (secureScore > 80) {
         return { status: urlStatus.CLEAR };
       }
